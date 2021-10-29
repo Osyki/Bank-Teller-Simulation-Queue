@@ -3,6 +3,8 @@
 //
 
 #include "Customer.h"
+
+
 extern Random my_random;
 
 //Definition of static members

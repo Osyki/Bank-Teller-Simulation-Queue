@@ -32,9 +32,27 @@ void Simulator::output_statistics() {
 
 void Simulator::run_simulation(int max_time, double arrival_rate_in_min) {
     for (int clock = 0; clock < max_time; clock++) {
-        the_customers.push(new Customer(clock));
+        //the_customers.push(new Customer(clock));
 
-        if (clock >=)
+        //push customer into queue when time matches arrival rate
+        if (clock == 0) {
+            the_customers.push(new Customer(clock));
+        } else if ((clock % int(arrival_rate_in_min)) == 0 ) {
+            the_customers.push(new Customer(clock));
+        }
+
+        //check what tellers are free
+        for (int i = 0; i < tellers.size(); i++) {
+            if (tellers[i].is_free() && !the_customers.empty()) {
+                tellers[i].start_service(clock,the_customers.front());
+                the_customers.pop();
+            }
+
+        }
     }
 
+}
+
+std::vector<Teller> Simulator::getTellers() const {
+    return tellers;
 }
