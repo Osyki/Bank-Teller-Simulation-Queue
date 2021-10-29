@@ -16,7 +16,7 @@ public:
      * @param the_arrival_time The time the customer arrived at the bank.
      */
 
-    Customer(int the_arrival_time);
+    explicit Customer(int the_arrival_time);
 
     /**
      * The customer has been assigned to a teller, and service has begun.
@@ -77,7 +77,7 @@ private:
     static int total_customers_served; // total number of customer serve
     int arrival_time; // customer arrival time
     int service_time; // customer service time
-    int delay_time; // customer waited in line
+    int delay_time{}; // customer waited in line
 
 };
 

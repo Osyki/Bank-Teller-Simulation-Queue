@@ -17,7 +17,7 @@ class Simulator
 {
 public:
 
-    void run_simulation(int x, double y);  // start the simulation
+    void run_simulation(int max_time, double arrival_rate_in_min);  // start the simulation
     void output_statistics();  // print out the statistics
     void setTellers(int x);  // create number of teller
     std::vector<Teller> getTellers() const;  // return tellers vector
