@@ -43,7 +43,7 @@ private:
     int time_service_ended;    // the time service end
     int total_service_time;    // total service time
     int total_idle_time;       // total idle time
-    Customer* currentCustomer; // current customer being serve
+    Customer* currentCustomer; // current customer being served
 
 };
 
