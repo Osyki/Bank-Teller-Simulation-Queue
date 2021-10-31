@@ -1,6 +1,6 @@
 //
 // Created by Jonathan Rubio on 10/28/21.
-//
+// Copyright [2021]
 
 #ifndef HW4_BANK_TELLER_QUEUE_RANDOM_H
 #define HW4_BANK_TELLER_QUEUE_RANDOM_H
