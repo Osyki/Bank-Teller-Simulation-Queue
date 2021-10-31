@@ -15,7 +15,7 @@ int main()
     int num_tellers = 3;
     double arrival_rate = 30;
     int max_time = 200;
-    int max_service_time = 3;
+    int max_service_time = 5;
 //  cout << "Enter the number of tellers: ";
 //  cin >> num_tellers;
 //  tellers.resize(num_tellers);

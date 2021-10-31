@@ -31,6 +31,7 @@ void Simulator::output_statistics() {
 }
 
 void Simulator::run_simulation(int max_time, double arrival_rate) {
+    //begin clock
     for (int clock = 0; clock < max_time; clock++) {
         //randomly push customers onto queue as needed
         if (my_random.next_double() < arrival_rate) {
@@ -38,52 +39,20 @@ void Simulator::run_simulation(int max_time, double arrival_rate) {
         }
 
         //check what tellers are free
-        for (int i = 0; i < tellers.size(); i++) {
+        for (size_t i = 0; i < tellers.size(); i++) {
+            //first check if tellers[i] is done with current customer
+            if (!tellers[i].is_free() && (tellers[i].get_time_next_free() <= clock)) {
+                tellers[i].end_service(clock);
+            }
+
             //if teller[i] is free and queue is not empty, give them a customer and pop from queue
             if (tellers[i].is_free() && !the_customers.empty()) {
                 tellers[i].start_service(clock, the_customers.front());
                 the_customers.pop();
             }
-
-            if (!tellers[i].is_free() && clock == tellers[i].get_time_next_free()) {
-                tellers[i].end_service(clock);
-            }
         }
-    }
-
-    for (int i = 0; i < tellers.size(); i++) {
-        if (!tellers[i].is_free()) {
-            tellers[i].end_service(max_time);
-        }
-    }
-    while (!the_customers.empty()) {
-        delete the_customers.front();
-        the_customers.pop();
     }
 }
-
-//void Simulator::run_simulation(int max_time, double arrival_rate_per_s) {
-//
-//    for (int clock = 0; clock < max_time; clock++) {
-//        if (my_random.next_double() < arrival_rate_per_s) {
-//            Customer *new_customer = new Customer(clock);
-//            the_customers.push(new_customer);
-//        }
-//        unsigned int x = tellers.size();
-//        while ((!the_customers.empty()) && (x > 0)) {
-//            if (tellers.at(x - 1).is_free()) {
-//                tellers.at(x - 1).start_service(clock, the_customers.front());
-//                the_customers.pop();
-//            }
-//            x--;
-//        }
-//        for (unsigned int y = tellers.size(); y > 0; y--) {
-//            if (tellers.at(y - 1).get_time_next_free() == clock) {
-//                tellers.at(y - 1).end_service(clock);
-//            }
-//        }
-//    }
-//}
 
 std::vector<Teller> Simulator::getTellers() const {
     return tellers;

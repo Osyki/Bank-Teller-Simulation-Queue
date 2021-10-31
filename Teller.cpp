@@ -36,20 +36,21 @@ int Teller::get_num_customers_served() const {
 }
 
 void Teller::start_service(int time, Customer *currentCustomer) {
-    total_idle_time += time - time_service_ended;
-    free = false;
-    this->currentCustomer = currentCustomer;
-    time_next_free = this->currentCustomer->start_service(time);
-    time_service_started = time;
+    free = false; //teller no longer free
+    total_idle_time += time - time_service_ended; //calculate idle time without customer
+    time_service_started = time; //time started with customer
+    this->currentCustomer = currentCustomer; //set current customer
+    time_next_free = this->currentCustomer->start_service(time); //returns next time free
+    num_customers_served++; //increment customers served by teller
 }
 
 void Teller::end_service(int time) {
-    if (currentCustomer != NULL)  {
-        free = true;
-        time_service_ended = time;
-        total_service_time += (time - time_service_started);
+    if (currentCustomer != NULL) { //check if its not NULL first
+        time_service_ended = time; //save time finished with customer
+        total_service_time += time_service_ended - time_service_started; //calculate total service time
         delete currentCustomer; //get rid of customer no longer needed
-        currentCustomer = NULL;
-        num_customers_served++;
+        currentCustomer = NULL; //set current customer back to NULL
+        free = true; //teller is free again
     }
+
 }
